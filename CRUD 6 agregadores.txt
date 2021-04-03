@@ -1,0 +1,51 @@
+use CRUD;
+
+db.agregadores.insertMany([
+    {nome: "Jose Pereira", sexo: "M", escolaridade: "S", salario: 1000, depto: {deptoNome: "A", Local: "X"}},
+    {nome: "Carlos Alberto", sexo: "M", escolaridade: "M", salario: 1500, depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Pedro Augusto", sexo: "M", escolaridade: "S", salario: 2000, depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Vinicius Mota", sexo: "M", escolaridade: "M", salario: 1750, depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Maria Lima", sexo: "F", escolaridade: "S", salario: 5000, depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Bárbara Kaires", sexo: "F", escolaridade: "M", salario: 1500, depto: {deptoNome: "B", Local: "Y"}},
+]);
+
+db.agregadores.find();
+
+-- aggregate count: Similar ao COUNT() do SQL
+
+--Quantos documentos existem na collection:
+db.agregadores.aggregate(
+    {$group: {_id: null, count: {$sum:1}}}
+);
+
+--Quantos documentos tem cada quantidade de salario (GROUP BY salario):
+db.agregadores.aggregate(
+    {$group: {_id: '$salario', count: {$sum:1}}}
+);
+
+-- aggregate avg: Similar ao AVG() do SQL
+
+--Media dos salarios:
+db.agregadores.aggregate(
+    {$group: {_id: null, media: {$avg: '$salario' }}}
+);
+
+-- aggregate sum: Similar ao SUM() do SQL
+
+--Soma dos salarios:
+db.agregadores.aggregate(
+    {$group: {_id: null, media: {$sum: '$salario' }}}
+);
+
+-Lookup
+--Lookup(aggregation): Executa a junção entre collections.
+Formato:
+{
+    $Lookup:
+    {
+        from: <collection to join>,
+        localField: <field from the input documents>,
+        foreignField: <field from the documents of the "from" collection>,
+        as: <output array field>
+    }
+}
