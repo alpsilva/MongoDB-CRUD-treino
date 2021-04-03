@@ -62,16 +62,16 @@ db.pessoa.find(criteria);
 projection_doc = {"name":1, "age":1, _id:0};
 db.pessoa.find({}, projection_doc);
 
---Apagar collection
-db.pessoa.drop();
-
---apagar database (importante usar o use pra garantir que vai dropar a DB correta!)
-use teste;  
-db.dropDatabase();
-
 --Update
 criteria = {age: 20};
 update = {$set: {car:"Gol Bolinha"}};
 options = {multi:true};
 
 db.pessoa.update(criteria, update, options);
+
+--Apagar collection
+db.pessoa.drop();
+
+--apagar database (importante usar o use pra garantir que vai dropar a DB correta!)
+use teste;  
+db.dropDatabase();
