@@ -1,0 +1,42 @@
+use CRUD
+
+db.operadores.insertMany([
+    {nome: "Jose Pereira", sexo: "M", escolaridade: "S", depto: {deptoNome: "A", Local: "X"}},
+    {nome: "Carlos Pereira", sexo: "M", escolaridade: "M", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Pedro Augusto", sexo: "M", escolaridade: "S", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Vinicius Mota", sexo: "M", escolaridade: "M", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Maria Pereira", sexo: "F", escolaridade: "S", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Bárbara Kaires", sexo: "F", escolaridade: "M", depto: {deptoNome: "B", Local: "Y"}},
+]);
+
+-Queries com operadores
+
+--Operador para match de string: Semelhante ao LIKE do SQL.
+--Retorna os nomes de todos os documentos que tenham "Pereira" em algum lugar do campo nome.
+query = {nome:/Pereira/};
+db.operadores.find(query, {nome: 1, _id: 0});
+
+--OR: Operador $or
+query1 = {escolaridade:"M"};
+query2 = {escolaridade:"S"};
+db.operadores.find({$or: [query1, query2]}, {nome: 1, escolaridade: 1, _id: 0});
+
+--IN
+db.operadores.find(
+    {escolaridade: {$in: ['M', 'S']}},
+    {nome: true, escolaridade: true, _id: false}
+);
+
+--NOT IN
+db.operadores.find(
+    {escolaridade: {$nin: ['M', 'S']}},
+    {nome: true, escolaridade: true, _id: false}
+);
+
+-outros operaradores:
+-- $eq: igualdade.
+-- $ne: inigualdade.
+-- $gt: maior que.
+-- $gte: maior que ou igual.
+-- $lt: menor que.
+-- $lte: menor que ou igual.
