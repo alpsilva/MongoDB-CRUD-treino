@@ -1,0 +1,58 @@
+use CRUD;
+
+--Find
+db.crud2.find();
+
+db.crud2.insertMany([
+    {a: 123},
+    {b: 456},
+    {c: 789},
+    {a: 123},
+    {b: 456},
+    {c: 789},
+    {a: 123},
+    {b: 456},
+    {c: 789},
+    {e: 123},
+    {f: 456},
+    {g: 789}
+]);
+
+db.crud2.find();
+
+--é possível passar uma query e uma projeção, mas são opcionais:
+
+--query: Parâmetros para filtrar os objetos.
+query = {b:456}
+db.crud2.find(query);
+
+--projeção: Parâmetros para especificar quais campos devem ser retornados.
+db.crud2projec.insertMany([
+    {nome: "Jose Pereira", idade: 10, estuda: true},
+    {nome: "Pedro Augusto", idade: 25, estuda: false},
+    {nome: "Henrique Iglesias", idade: 40, estuda: false},
+    {nome: "Darwin Miguel", idade: 30, estuda: true},
+    {nome: "Orlando Bloom", idade: 57, estuda: false}
+]);
+db.crud2projec.find();
+
+--Como funciona? listar, de todos os campos, qual deseja retornado.
+projection = {nome:1, idade:1, _id:0};
+db.crud2projec.find({}, projection);
+
+porém, não pode misturar:
+O projection deve ser tudo 1, ou tudo 0, com a única exceção sendo o 
+_id, que permite mistura:
+
+--Errado
+projection = {nome:1, idade:0};
+db.crud2projec.find({}, projection);
+
+--Correto
+projection = {idade: 0}
+db.crud2projec.find({}, projection);
+
+--Projeção com query/filtro:
+filtro = {estuda: true};
+projection = {idade: 0, _id: 0};
+db.crud2projec.find(filtro, projection);
