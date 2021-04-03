@@ -29,7 +29,19 @@ db.pessoa.insertMany(
 --Listar todos os documentos da collection
 db.pessoa.find();
 
---Listar todos os documentos com o .pretty()
+--Listar os documentos de forma ordenada (1 -> Crescente | -1 -> Decrescente)
+db.pessoa.find().sort({"age":-1, "name":1});
+
+--Listar todos os documentos da collection com uma limitação de número de objetos retornados
+db.pessoa.find().limit(4);
+
+----Listar todos os documentos da collection pulando alguns os primeiros n objetos retornados
+db.pessoa.find().skip(2);
+
+--Listar quantos documentos existem na collection
+db.pessoa.find().count();
+
+--Listar todos os documentos com de forma mais legível
 db.pessoa.find().pretty();
 
 --Documentos são "schema-less", então é possível alterar o formato do documento a vontade.
@@ -56,3 +68,10 @@ db.pessoa.drop();
 --apagar database (importante usar o use pra garantir que vai dropar a DB correta!)
 use teste;  
 db.dropDatabase();
+
+--Update
+criteria = {age: 20};
+update = {$set: {car:"Gol Bolinha"}};
+options = {multi:true};
+
+db.pessoa.update(criteria, update, options);
