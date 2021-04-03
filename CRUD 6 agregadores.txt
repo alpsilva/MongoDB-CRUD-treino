@@ -36,16 +36,3 @@ db.agregadores.aggregate(
 db.agregadores.aggregate(
     {$group: {_id: null, media: {$sum: '$salario' }}}
 );
-
--Lookup
---Lookup(aggregation): Executa a junção entre collections.
-Formato:
-{
-    $Lookup:
-    {
-        from: <collection to join>,
-        localField: <field from the input documents>,
-        foreignField: <field from the documents of the "from" collection>,
-        as: <output array field>
-    }
-}
