@@ -1,0 +1,31 @@
+use CRUD;
+
+db.crud3.insertMany([
+    {nome: "Jose Pereira", sexo: "M", escolaridade: "S", depto: {deptoNome: "A", Local: "X"}},
+    {nome: "Carlos Alberto", sexo: "M", escolaridade: "M", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Pedro Augusto", sexo: "M", escolaridade: "S", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Vinicius Mota", sexo: "M", escolaridade: "M", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Maria Lima", sexo: "F", escolaridade: "S", depto: {deptoNome: "A", Local: "Y"}},
+    {nome: "Bárbara Kaires", sexo: "F", escolaridade: "M", depto: {deptoNome: "B", Local: "Y"}},
+]);
+
+db.crud3.find();
+Obs.: /algo/ no filtro, é análogo ao LIKE ('algo') do SQL.
+db.crud3.findOne({nome: /Augusto/});
+
+
+--updateOne() 
+db.crud3.updateOne({nome: /Augusto/}, {$set:{salario: 2500}});
+
+db.crud3.findOne({nome: /Augusto/});
+
+--updateMany()
+db.crud3.updateMany({nome: /a/}, {$set:{salario: 2000}});
+
+db.crud3.find();
+
+--replaceOne()
+--Substitui o documento inteiro pelo passado como parametro
+db.crud3.replaceOne({nome: /Augusto/}, {salario: 5000});
+
+db.crud3.find();
