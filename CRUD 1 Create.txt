@@ -1,0 +1,41 @@
+use CRUD;
+
+-inserts
+--Insert padrão
+db.crud.insert({field_A: 123});
+
+--InsertOne: Possui campo opcional WriteConcern
+db.crud.insertOne({field_A: 2123});
+db.crud.insertOne({field_A: 223}, <WriteConcern>);
+
+--InsertMany: Inserção de varios valores de uma vez.
+--Possui campos adcionais WriteConcern e Ordered(boolean que especifica se
+o mongo deve executar uma inserção ordenadamente ou não. Padrão é true.)
+--Como funciona o Ordered:
+--True: Se um dos documentos gerar erro, nenhum da lista vai ser inserido.
+--False: Se um dos documentos gerar erro, apenas ele não vai ser inserido.
+db.crud.insertMany(
+    [
+        {_id: 1, a: 123},
+        {_id: 2, b: 456},
+        {_id: 3, c: 789}
+    ]
+);
+
+--Vai dar erro e nenhum será inserido:
+db.crud.insertMany(
+    [
+        {_id: 1, a: 123},
+        {_id: 7, b: 456}
+    ]
+);
+
+--Deixando o Ordered false, o _id 7 será inserido:
+db.crud.insertMany(
+    [
+        {_id: 1, a: 123},
+        {_id: 7, b: 456}
+    ], {ordered: false}
+);
+
+Lembrando que não é boa prática o usuário escolher o campo _id. É melhor deixar o mongo se encarregar disso.
