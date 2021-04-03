@@ -1,0 +1,14 @@
+--Introdução sub-entende-se que o shell já esteja rodando!
+
+--Mostra todas as dbs
+show dbs;
+
+--Mostra todas as collections
+show collections;
+
+--Obs.: collections são similares a tables em SQL.
+
+--usar ou criar (caso não exista) dbs
+use NomeDatabase;
+
+--
