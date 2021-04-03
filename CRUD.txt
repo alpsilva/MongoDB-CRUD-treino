@@ -1,0 +1,12 @@
+-CRUD:
+--Create
+    db.collection.insert(<document>);
+    db.collection.save(<document>);
+    db.collection.update(<query>, <update>, {upset:true});
+--Read
+    db.collection.find(<query>, <projection>);
+    db.collection.findOne(<query>, <projection>);
+--Update
+    db.collection.update(<query>, <update>, <options>);
+--Delete
+    db.collection.remove(<query>, <justOne>);
