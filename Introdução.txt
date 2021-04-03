@@ -11,4 +11,48 @@ show collections;
 --usar ou criar (caso não exista) dbs
 use NomeDatabase;
 
---
+--Daqui em diante usaremos o DB 'teste' e collections 'pessoa' para exemplificar
+use teste;
+
+--Inserção (Caso a collection não existe, esse comando a cria automaticamente)
+db.pessoa.insertOne({name: "Maria", age:25});
+
+--Inserção de vários objetos
+db.pessoa.insertMany(
+    [
+        {name: "Pedro", age:20},
+        {name: "Thiago", age:30},
+        {name: "Fernanda", age:37}
+    ]
+);
+
+--Listar todos os documentos da collection
+db.pessoa.find();
+
+--Listar todos os documentos com o .pretty()
+db.pessoa.find().pretty();
+
+--Documentos são "schema-less", então é possível alterar o formato do documento a vontade.
+db.pessoa.insertMany(
+    [
+        {name: "Fátima", age:20, car: "Uno mille"},
+        {name: "Marcus"},
+        {name: "Vitória", car: "Tesla Model x", age:30},
+        {name: "Marcus", car: ["Audi", "Peugeot"]}
+    ]
+);
+
+--Definir criteria de busca (filtro)
+criteria = {age: 20};
+db.pessoa.find(criteria);
+
+--Projeções (Selecionar quais informações vão ser retornadas).
+projection_doc = {"name":1, "age":1, _id:0};
+db.pessoa.find({}, projection_doc);
+
+--Apagar collection
+db.pessoa.drop();
+
+--apagar database (importante usar o use pra garantir que vai dropar a DB correta!)
+use teste;  
+db.dropDatabase();
