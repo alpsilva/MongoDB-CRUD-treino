@@ -49,3 +49,27 @@ db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: 2020});
 db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: NumberInt('2017')});
 
 db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: NumberInt(2020)});
+
+-Capped collection:
+--Um um parâmetro boolean opcional no validator que define a criação de uma coleção LIMITADA.
+--Por padrão, coleções são ilimitadas.
+
+--Quando especificar uma capped collection, é necessário determinar o parâmetro "size" e "max".
+---Size: O tamanho máximo, em bytes, da collection. Tem precedência sobre o Max.
+---Max: Número máximo de documentos permitidos dentro da collection.
+--Quando o limite é atingido e um novo documento precisar ser inserido, o mongo deleta documentos mais antigos.
+
+--Exemplo:
+
+db.createCollection("log_simulado", {
+    capped: true,
+    size: 1024,
+    max: 5
+});
+
+db.log_simulado.insert({n: 1, desc: '1xxx'});
+db.log_simulado.insert({n: 2, desc: '2xxx'});
+db.log_simulado.insert({n: 3, desc: '3xxx'});
+db.log_simulado.insert({n: 4, desc: '4xxx'});
+db.log_simulado.insert({n: 5, desc: '5xxx'});
+db.log_simulado.insert({n: 6, desc: '6xxx'});
