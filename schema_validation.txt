@@ -72,4 +72,11 @@ db.log_simulado.insert({n: 2, desc: '2xxx'});
 db.log_simulado.insert({n: 3, desc: '3xxx'});
 db.log_simulado.insert({n: 4, desc: '4xxx'});
 db.log_simulado.insert({n: 5, desc: '5xxx'});
+
+db.log_simulado.find();
+
 db.log_simulado.insert({n: 6, desc: '6xxx'});
+
+db.log_simulado.find();
+
+--O registro 1 foi apagado.
