@@ -1,0 +1,51 @@
+use CRUD;
+
+--criar um validator para garantir que os documentos inseridos respeitem algumas regras:
+
+db.createCollection(
+    "carro",
+    {
+        validator: {
+            $jsonSchema: {
+                bsonType: "object",
+                required: ["modelo", "ano"],
+                properties: {
+                    modelo: {
+                        bsonType: "string",
+                        description: "Modelo é string e é obrigatório."
+                    },
+                    fabricante: {
+                        bsonType: "string",
+                        minLength: 3,
+                        maxLength: 30,
+                        description: "Deve ser string."
+                    },
+                    ano: {
+                        bsonType: "int",
+                        minLength: 2015,
+                        maxLength: 2025,
+                        description: "Inteiro entre [2015, 2025] e é obrigatório.]"
+                    }
+                }
+            }
+        }
+    }
+);
+
+--O validator cria uma collection "carro", com os campos modelo e ano obrigatórios e algumas regras opcionais nos campos.
+
+--inserts com erros:
+
+Dissemos que o campo "ano" recebe um int, mas passamos string.
+
+db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: '2017'});
+
+Dissemos que o campo "ano" recebe um int, mas por padrão, o mongo enxerga valore numéricos como double.
+
+db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: 2020});
+
+--Uma possível correção:
+
+db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: NumberInt('2017')});
+
+db.carro.insert({modelo: 'HB20', fabricante: 'Hyundai', ano: NumberInt(2020)});
